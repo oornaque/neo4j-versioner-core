@@ -111,7 +111,7 @@ name | parameters | return values | description
 [graph.versioner.update](#update) | **entity**, *{key:value,...}*, *additionalLabel*, *date* | **node** | Add a new State to the given Entity.
 [graph.versioner.patch](#patch) | **entity**, *{key:value,...}*, *additionalLabel*, *date* | **node** | Add a new State to the given Entity, starting from the previous one. It will update all the properties, not labels.
 [graph.versioner.patch.from](#patch-from) | **entity**, **state**, *useCurrentRel*, *date* | **node** | Add a new State to the given Entity, starting from the given one. It will update all the properties, not labels.
-[graph.versioner.get.current.path](#get-current-path) | **entity** | **path** | Get a the current path (Entity, State and rels) for the given Entity.
+[graph.versioner.get.current.path](#get-current-path) | **entity** | **path** | Get the current path (Entity, State and rels) for the given Entity.
 [graph.versioner.get.current.state](#get-current-state) | **entity** | **node** | Get the current State node for the given Entity.
 [graph.versioner.get.all](#get-all) | **entity** | **path** | Get an Entity State path for the given Entity.
 [graph.versioner.get.by.label](#get-by-label) | **entity**, label | **node** | Get State nodes with the given label, by the given Entity node.
@@ -165,7 +165,7 @@ CALL graph.versioner.init('Person', {ssn: localdatetime('1988-10-27T02:46:40'), 
 
 ## update
 
-This procedure is used in order to update a status of an existing Entity node. It will create a new `State` node, deleting the previous `CURRENT` relationship, creating a new one to the new created node with the current date (or the optional one, if given); then it update the last `HAS_STATE` relationship adding the current/given date as the `endDate` and creating a new `HAS_STATE` relationship with `startDate` as the current/given date. It will also create a new relationship between the new and the last `State` called `PREVIOUS`, with the old date as a property.
+This procedure is used to update a status of an existing Entity node. It will create a new `State` node, deleting the previous `CURRENT` relationship, creating a new one to the new created node with the current date (or the optional one, if given); then it updates the last `HAS_STATE` relationship adding the current/given date as the `endDate` and creating a new `HAS_STATE` relationship with `startDate` as the current/given date. It will also create a new relationship between the new and the last `State` called `PREVIOUS`, with the old date as a property.
 If the Entity node has no `State`, it will create a new `State` node, with both `HAS_STATE` and `CURRENT` relationships.
 If no properties are passed, a new `State` node will be created, without properties.
 If a custom relationship exists between the current `State` and a `R` node, that relationship is kept on the updated `State`.
@@ -200,7 +200,7 @@ MATCH (d:Device) WITH d CALL graph.versioner.update(d, {context:'some details'},
 
 ## patch
 
-This procedure is used in order to patch the current status of an existing Entity node, updating/creating the given properties, maintaining the oldest and untouched one. It will create a new `State` node, deleting the previous `CURRENT` relationship, creating a new one to the new created node with the current date (or the optional one, if given); then it update the last `HAS_STATE` relationship adding the current/given date as the `endDate` and creating a new `HAS_STATE` relationship with `startDate` as the current/given date. It will also create a new relationship between the new and the last `State` called `PREVIOUS`, with the old date as a property.
+This procedure is used to patch the current status of an existing Entity node, updating/creating the given properties, maintaining the oldest and untouched one. It will create a new `State` node, deleting the previous `CURRENT` relationship, creating a new one to the new created node with the current date (or the optional one, if given); then it updates the last `HAS_STATE` relationship adding the current/given date as the `endDate` and creating a new `HAS_STATE` relationship with `startDate` as the current/given date. It will also create a new relationship between the new and the last `State` called `PREVIOUS`, with the old date as a property.
 If the Entity node has no `State`, it will create a new `State` node, with both `HAS_STATE` and `CURRENT` relationships. 
 If no properties are passed, a copy of the `CURRENT` node will be created as the new `State`.
 If a custom relationship exists between the current `State` and a `R` node, that relationship is kept on the updated `State`.
@@ -234,7 +234,7 @@ MATCH (d:Device) WITH d CALL graph.versioner.patch(d, {warnings: 'some warnings'
 
 ## patch from
 
-This procedure is used in order to patch the current `State` of an existing Entity node, updating/creating the properties using the those one the given `State`, maintaining the oldest and untouched one. It will create a new `State` node, deleting the previous `CURRENT` relationship, creating a new one to the new created node with the current date (or the optional one, if given); then it update the last `HAS_STATE` relationship adding the current/given date as the `endDate` and creating a new `HAS_STATE` relationship with `startDate` as the current/given date. It will also create a new relationship between the new and the last `State` called `PREVIOUS`, with the old date as a property.
+This procedure is used to patch the current `State` of an existing Entity node, updating/creating the properties using the those one the given `State`, maintaining the oldest and untouched one. It will create a new `State` node, deleting the previous `CURRENT` relationship, creating a new one to the new created node with the current date (or the optional one, if given); then it updates the last `HAS_STATE` relationship adding the current/given date as the `endDate` and creating a new `HAS_STATE` relationship with `startDate` as the current/given date. It will also create a new relationship between the new and the last `State` called `PREVIOUS`, with the old date as a property.
 If the given `State` is not related with the given Entity, an error will occur.`
 If a custom relationship exists between the current `State` and a `R` node, that relationship is kept on the updated `State` if useCurrentRel is set to `true`` otherwise it will use the given `State` one.
 
